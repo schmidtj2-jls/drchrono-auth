@@ -4,41 +4,28 @@
   <title>Signing in...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 40px 20px; background: #f5f5f5; }
-    h2 { color: #333; }
-    p { color: #666; }
-    a.btn { display: inline-block; margin-top: 24px; padding: 14px 28px;
-            background: #4f86f7; color: white; text-decoration: none;
-            border-radius: 8px; font-size: 16px; }
+    body { font-family: -apple-system, sans-serif; text-align: center; padding: 60px 24px;
+           background: #0D132B; color: #F7F7F8; }
+    h2 { font-size: 22px; margin-bottom: 12px; }
+    p  { color: #C7CAD1; margin-bottom: 40px; font-size: 15px; }
+    .btn { display: inline-block; padding: 18px 36px; background: #4FA8A6; color: white;
+           text-decoration: none; border-radius: 14px; font-size: 18px; font-weight: 600;
+           letter-spacing: 0.3px; }
+    .btn:active { opacity: 0.8; }
+    .note { margin-top: 28px; font-size: 13px; color: #7A8BA6; }
   </style>
 </head>
 <body>
-  <h2>Completing sign-in...</h2>
-  <p id="status">Returning you to the app...</p>
-  <a id="fallback" class="btn" style="display:none" href="">Tap here to return to app</a>
+  <h2>Sign-in complete</h2>
+  <p>Tap below to return to Chronoscope.</p>
+  <a id="btn" class="btn" href="">Return to Chronoscope</a>
+  <p class="note">If the app does not open, make sure Expo Go is installed.</p>
   <script>
     var params = window.location.search;
-
-    // Direct exp:// link — used as fallback button
-    var expUrl = 'exp://192.168.50.191:8081/--/auth' + params;
-
-    // Android Intent URL — tells Chrome to open Expo Go directly.
-    // Chrome blocks automatic window.location = 'exp://...' redirects,
-    // but Intent URLs are explicitly supported and never blocked.
     var intentUrl = 'intent://192.168.50.191:8081/--/auth' + params +
-      '#Intent;scheme=exp;package=host.exp.exponent;end';
-
-    document.getElementById('fallback').href = expUrl;
-
-    setTimeout(function () {
-      window.location = intentUrl;
-      // If the app didn't open after 2s, show the manual tap button
-      setTimeout(function () {
-        document.getElementById('status').textContent =
-          'If the app did not open automatically, tap the button below.';
-        document.getElementById('fallback').style.display = 'inline-block';
-      }, 2000);
-    }, 500);
+                    '#Intent;scheme=exp;package=host.exp.exponent;end';
+    document.getElementById('btn').href = intentUrl;
+    setTimeout(function() { window.location = intentUrl; }, 400);
   </script>
 </body>
 </html>
