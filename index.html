@@ -7,9 +7,9 @@
     body { font-family: -apple-system, sans-serif; text-align: center; padding: 60px 24px;
            background: #0D132B; color: #F7F7F8; }
     h2 { font-size: 22px; margin-bottom: 12px; }
-    p  { color: #C7CAD1; margin-bottom: 40px; font-size: 15px; }
-    .btn { display: inline-block; padding: 18px 36px; background: #4FA8A6; color: white;
-           text-decoration: none; border-radius: 14px; font-size: 18px; font-weight: 600;
+    p  { color: #C7CAD1; margin-bottom: 28px; font-size: 15px; line-height: 1.5; }
+    .btn { display: inline-block; padding: 16px 32px; background: #4FA8A6; color: white;
+           text-decoration: none; border-radius: 14px; font-size: 17px; font-weight: 600;
            letter-spacing: 0.3px; }
     .btn:active { opacity: 0.8; }
     .note { margin-top: 28px; font-size: 13px; color: #7A8BA6; }
@@ -17,15 +17,19 @@
 </head>
 <body>
   <h2>Sign-in complete</h2>
-  <p>Tap below to return to Chronoscope.</p>
+  <p>Returning to Chronoscope...</p>
   <a id="btn" class="btn" href="">Return to Chronoscope</a>
-  <p class="note">If the app does not open, make sure Expo Go is installed.</p>
+  <p class="note">If Chronoscope is installed, it should open automatically.</p>
   <script>
+    // With Android App Links configured, Chronoscope intercepts this URL before
+    // the page ever renders. This script + button is the fallback path for cases
+    // where verification failed (older Android, sideloaded debug build) or the
+    // user opens this URL in a desktop browser.
     var params = window.location.search;
-    var intentUrl = 'intent://192.168.50.191:8081/--/auth' + params +
-                    '#Intent;scheme=exp;package=host.exp.exponent;end';
-    document.getElementById('btn').href = intentUrl;
-    setTimeout(function() { window.location = intentUrl; }, 400);
+    var fallback = 'intent://auth' + params +
+                   '#Intent;scheme=drchronoschedule;package=com.drchronoschedule.app;end';
+    document.getElementById('btn').href = fallback;
+    setTimeout(function() { window.location = fallback; }, 600);
   </script>
 </body>
 </html>
